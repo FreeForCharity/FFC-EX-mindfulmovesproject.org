@@ -12,9 +12,11 @@
 # `.well-known/` (Cloudflare Pages, Netlify, plain nginx, etc.) serve both.
 # The drift checker enforces that /security.txt stays in sync with this file.
 
+# Contact: omitted until Mindful Moves publishes a contact email
+# (listed as pending in src/lib/site.config.ts).
 Expires: 2027-01-01T00:00:00.000Z
 Preferred-Languages: en
-Canonical: https://ffcworkingsite1.org/.well-known/security.txt
-Canonical: https://ffcworkingsite1.org/security.txt
-Policy: https://ffcworkingsite1.org/vulnerability-disclosure-policy
-Acknowledgments: https://ffcworkingsite1.org/security-acknowledgements
+Canonical: https://freeforcharity.github.io/FFC-EX-mindfulmovesproject.org/.well-known/security.txt
+Canonical: https://freeforcharity.github.io/FFC-EX-mindfulmovesproject.org/security.txt
+Policy: https://freeforcharity.github.io/FFC-EX-mindfulmovesproject.org/vulnerability-disclosure-policy
+Acknowledgments: https://freeforcharity.github.io/FFC-EX-mindfulmovesproject.org/security-acknowledgements

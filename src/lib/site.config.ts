@@ -248,10 +248,10 @@ export const siteConfig: SiteConfig = {
   description:
     'Mindful Moves is a nonprofit organization. Learn about Mindful Moves, our team, and how to support our work.',
   shortDescription: 'Mindful Moves is a nonprofit organization.',
-  // Bare origin only (drift-check enforced). This repo's public/CNAME names
-  // ffcworkingsite1.org, so the deploy builds with no basePath and this is the
-  // origin its canonical URLs use. Change both together when the site moves.
-  url: 'https://ffcworkingsite1.org',
+  // Bare origin only (drift-check enforced). This repo has no public/CNAME, so
+  // the deploy builds with basePath /FFC-EX-mindfulmovesproject.org and serves
+  // from this origin. Change both together when the site moves to its domain.
+  url: 'https://freeforcharity.github.io',
   twitterHandle: '',
   contactEmail: '',
   keywords: ['nonprofit', 'charity', 'donate', 'volunteer', 'Mindful Moves'],
