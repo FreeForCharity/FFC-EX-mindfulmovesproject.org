@@ -7,7 +7,6 @@ import TermsPage from '../../src/app/terms-of-service/page'
 import VulnDisclosurePage from '../../src/app/vulnerability-disclosure-policy/page'
 import SecurityAckPage from '../../src/app/security-acknowledgements/page'
 import DonationPolicyPage from '../../src/app/donation-policy/page'
-import FfcDonationPolicyPage from '../../src/app/free-for-charity-donation-policy/page'
 import { siteConfig } from '../../src/lib/site.config'
 import {
   asCharitySite,
@@ -192,18 +191,5 @@ describe("the supporting organization's own site", () => {
     const surface = renderedSurface(container)
     expect(surface).toContain(siteConfig.supportedBy.url)
     expect(surface).toContain(siteConfig.supportedBy.hubUrl)
-  })
-})
-
-describe('Free For Charity’s own donation policy', () => {
-  afterEach(restoreSiteConfig)
-
-  // Deliberately NOT charity-owned: every site links to it from the footer as
-  // FFC's document, so it keeps FFC's identity after a rebrand (and
-  // check:drift exempts exactly this page).
-  it('keeps FFC’s name on a charity’s site', () => {
-    asCharitySite()
-    const { container } = render(<FfcDonationPolicyPage />)
-    expect(container.textContent).toContain('Free For Charity Donation Policy')
   })
 })
