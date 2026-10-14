@@ -333,7 +333,6 @@ The main page (`/`) is a single-page application composed of scrollable sections
 - Cookie Policy (`/cookie-policy`)
 - Terms of Service (`/terms-of-service`)
 - Donation Policy (`/donation-policy`)
-- Free For Charity Donation Policy (`/free-for-charity-donation-policy`)
 - Vulnerability Disclosure Policy (`/vulnerability-disclosure-policy`)
 - Security Acknowledgements (`/security-acknowledgements`)
 
@@ -790,7 +789,6 @@ src/
 │   ├── home-page/                             # Homepage sections (single-page structure)
 │   ├── cookie-policy/                         # Cookie Policy page
 │   ├── donation-policy/                       # Donation Policy page
-│   ├── free-for-charity-donation-policy/      # Free For Charity Donation Policy page
 │   ├── privacy-policy/                        # Privacy Policy page
 │   ├── security-acknowledgements/             # Security Acknowledgements page
 │   ├── terms-of-service/                      # Terms of Service page

@@ -160,22 +160,17 @@ describe('check-drift: brand identity', () => {
   const findings = (files: { path: string; body: string }[], name = 'Riverbend Pantry') =>
     callInChild<IdentityFinding[]>('brandIdentityFindings', files, name)
 
-  it("exempts Free For Charity's own donation policy page, which is FFC's by design", () => {
-    expect(
-      findings([{ path: 'src/app/free-for-charity-donation-policy/page.tsx', body: FFC_PAGE }])
-    ).toEqual([])
+  it('flags the retired FFC donation policy page like any other page', () => {
+    const out = findings([
+      { path: 'src/app/free-for-charity-donation-policy/page.tsx', body: FFC_PAGE },
+    ])
+    expect(out.map((f) => f.line)).toEqual([1, 2, 2])
   })
 
-  it('exempts that page by exact path only — the same text anywhere else is an error', () => {
+  it('flags the same text on the charity’s own donation policy', () => {
     const out = findings([{ path: 'src/app/donation-policy/page.tsx', body: FFC_PAGE }])
     expect(out.map((f) => f.line)).toEqual([1, 2, 2])
     expect(out.map((f) => f.label).join(' ')).toMatch(/org name.*org name.*EIN/)
-  })
-
-  it('accepts Windows separators for the exempt path', () => {
-    expect(
-      findings([{ path: 'src\\app\\free-for-charity-donation-policy\\page.tsx', body: FFC_PAGE }])
-    ).toEqual([])
   })
 
   it("stays dormant on the template itself, where FFC's identity is correct", () => {

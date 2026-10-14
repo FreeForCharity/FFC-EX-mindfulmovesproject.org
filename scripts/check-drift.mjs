@@ -15,9 +15,7 @@
  *  6. Leftover Free For Charity brand identity (org name, freeforcharity.org
  *     URLs, EIN, phone, @freeforcharity.org emails) in rendered pages/
  *     components after a child site rebrands — the footer platform-credit
- *     attribution is the one allowlisted exception, and FFC's own donation
- *     policy page (src/app/free-for-charity-donation-policy/) is exempt as a
- *     document that is FFC's by design. This is the enforced
+ *     attribution is the one allowlisted exception. This is the enforced
  *     complement to the advisory `pnpm run check:rebrand` config/data checklist.
  *  7. A workflow passing `static_site_generator: next` to
  *     actions/configure-pages while this repo's Next config is TypeScript —
@@ -562,17 +560,13 @@ const FFC_IDENTITY_PATTERNS = [
 
 // A child site that customizes its footer with a hardcoded "Built with Free For
 // Charity" platform credit may keep it. Allow ONLY those specific lines (the
-// credit text, the exact attribution href, and the FFC donation-policy label —
-// that page documents FFC's own policy, so its label intentionally keeps FFC's
-// name after a rebrand) so any other freeforcharity.org URL — or an EIN, phone,
-// or email — is still flagged even inside the footer.
+// credit text and the exact attribution href) so any other freeforcharity.org
+// URL — or an EIN, phone, or email — is still flagged even inside the footer.
 function isAllowedIdentityLine(relPath, line) {
   const normalized = relPath.split(sep).join('/')
   if (normalized !== 'src/components/footer/index.tsx') return false
   return (
-    /Built with Free For Charity/.test(line) ||
-    /href="https:\/\/freeforcharity\.org"/i.test(line) ||
-    /Free For Charity Donation Policy/.test(line)
+    /Built with Free For Charity/.test(line) || /href="https:\/\/freeforcharity\.org"/i.test(line)
   )
 }
 
@@ -586,13 +580,6 @@ function withoutSupportedByBlock(relPath, body) {
   if (normalized !== 'src/lib/site.config.ts') return body
   return body.replace(/supportedBy:\s*\{[^}]*\}/g, (block) => block.replace(/[^\n]/g, ' '))
 }
-
-// Pages that ARE Free For Charity's own documents, published on every site
-// under FFC's name by design — not leftover template branding. The footer's
-// "Free For Charity Donation Policy" link (allowlisted above) points at the
-// first. Exempted by exact path only, so the same identity anywhere else —
-// including the charity's own /donation-policy — is still an error.
-const FFC_OWN_DOCUMENTS = new Set(['src/app/free-for-charity-donation-policy/page.tsx'])
 
 /**
  * Pure detector, exported for tests: every line in `files` that still carries
@@ -608,7 +595,6 @@ export function brandIdentityFindings(files, name) {
   const findings = []
   for (const { path, body } of files) {
     const rel = path.split(sep).join('/').split('\\').join('/')
-    if (FFC_OWN_DOCUMENTS.has(rel)) continue
     const lines = withoutSupportedByBlock(rel, body).split('\n')
     for (let i = 0; i < lines.length; i++) {
       const line = lines[i]

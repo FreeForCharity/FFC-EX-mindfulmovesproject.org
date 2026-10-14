@@ -454,3 +454,21 @@ export function publishedPhone(): { display: string; tel: string } | null {
   const tel = siteConfig.phone.tel.trim()
   return display && tel ? { display, tel } : null
 }
+
+/**
+ * The organization's public city and state, for the contact blocks on the
+ * policy pages, or null when no address is configured.
+ *
+ * Provisioning writes the charity application's public "city & state" answer
+ * as the only line of the first address. A fuller address (the template's own
+ * offices, or a hand-edited fork) keeps only its last line, where city, state
+ * and ZIP conventionally sit, and the ZIP is dropped. The policies therefore
+ * never publish a street address, matching the application's "city and state
+ * only" rule.
+ */
+export function publishedCityState(): string | null {
+  const lines = (siteConfig.addresses[0]?.lines ?? []).map((line) => line.trim()).filter(Boolean)
+  const last = lines[lines.length - 1]
+  if (!last) return null
+  return last.replace(/\s+\d{5}(?:-\d{4})?$/, '').trim() || null
+}

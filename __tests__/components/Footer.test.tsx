@@ -134,15 +134,11 @@ describe('Footer component', () => {
     expect(hubLink).toHaveAttribute('href', siteConfig.supportedBy.hubUrl)
   })
 
-  it('keeps the FFC donation policy label hardcoded (not siteConfig.name-branded)', () => {
-    render(<Footer />)
-    // This page documents FFC's own donation policy, so its label must not
-    // pick up a fork's rebranded siteConfig.name.
-    const ffcPolicyLink = screen.getByText('Free For Charity Donation Policy').closest('a')
-    expect(ffcPolicyLink).toHaveAttribute('href', '/free-for-charity-donation-policy')
-    // The charity's own donation policy remains a separate entry.
-    const ownPolicyLink = screen.getByText('Donation Policy').closest('a')
-    expect(ownPolicyLink).toHaveAttribute('href', '/donation-policy')
+  it('links one donation policy, branded to the site, and not the retired FFC policy', () => {
+    const { container } = render(<Footer />)
+    expect(container.querySelector('a[href*="free-for-charity-donation-policy"]')).toBeNull()
+    const own = screen.getByText(`${siteConfig.name} Donation Policy`).closest('a')
+    expect(own).toHaveAttribute('href', '/donation-policy')
   })
 
   it('renders every configured office address with a maps link', () => {
